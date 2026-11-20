@@ -1,0 +1,15 @@
+{
+  "model": "Qwen3.5-9B",
+  "gpu": "RTX 3060 12 GB",
+  "parallel_requests": 8,
+  "prefix_tokens_per_request": 1024,
+  "measure": "固定批次缓存解码总吞吐",
+  "candidate": {
+    "label": "Native64 八位推理，llama.cpp CUDA 接入",
+    "tokens_per_second": 206.59
+  },
+  "baseline": {
+    "label": "llama.cpp Q8_0，启用 CUDA Graph",
+    "tokens_per_second": 152.79
+  }
+}
