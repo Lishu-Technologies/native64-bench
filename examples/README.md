@@ -1,13 +1,13 @@
-# 推理对照报告样品
+# Inference comparison example
 
-[数据样品](qwen35-9b-b8.json)记录已测的 Qwen3.5-9B 八位对照。脚本使用 Python 3 标准库，从汇总数据生成 Markdown 表。
+The [sample data](qwen35-9b-b8.json) contain archived Qwen3.5-9B 8-bit results. The script uses the Python 3 standard library to generate a Markdown table from the aggregate results.
 
-在仓库根目录运行以下命令。
+Run this command from the repository root.
 
 ```bash
 python -X utf8 examples/render_report.py
 ```
 
-预期输出含 Native64 **206.59 token/s**、对照 **152.79 token/s**，以及相对变化 **+35.21%**。将同结构的另一份 JSON 路径作为参数，即可用自己的汇总结果生成报告。
+The output includes **206.59 tokens/s** for Native64, **152.79 tokens/s** for the baseline, and a relative change of **+35.21%**. Pass another JSON file with the same structure to generate a report from your own aggregate results.
 
-这个样品执行报告生成。实际推理的测试口径见[性能对照说明](../docs/benchmark-method.md)。
+The example generates a report. For the inference test conditions, see [Benchmark methodology](../docs/benchmark-method.md).

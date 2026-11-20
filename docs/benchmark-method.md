@@ -1,12 +1,12 @@
-# 性能对照口径
+# Benchmark methodology
 
-两组测试均在 RTX 3060 12 GB 上运行 Qwen3.5-9B 文本推理。每步推进 8 路请求，结果为八路合计的缓存解码吞吐，单位为 token/s。
+Both tests run Qwen3.5-9B text inference on an RTX 3060 12 GB. Each step advances eight concurrent requests. Throughput is reported as total cached decode tokens per second across all eight requests.
 
-| 固定负载 | Native64 | 对照 | 计时和汇总方式 |
+| Fixed workload | Native64 (tokens/s) | Baseline (tokens/s) | Timing and aggregation |
 |---|---:|---:|---|
-| 每路 4,096 token，混合精度 | 264.98 | 157.02 | 运行 64 个解码步。llama.cpp Q4_K_M 在候选前后各跑一轮，取更快值。 |
-| 每路 1,024 token，八位路径 | 206.59 | 152.79 | 每轮计 40 个解码步，分别取两轮的中位数。对照为启用 CUDA Graph 的 llama.cpp Q8_0。 |
+| 4,096 tokens per request, mixed precision | 264.98 | 157.02 | 64 decode steps. The llama.cpp Q4_K_M baseline ran once before and once after the Native64 run. The faster baseline result is reported. |
+| 1,024 tokens per request, 8-bit path | 206.59 | 152.79 | 40 decode steps per run. Each path reports the median of two runs. The llama.cpp Q8_0 baseline ran with CUDA Graph enabled. |
 
-两行各自使用对应的运行时和量化配置。混合精度行记录 Native64 批量执行路径。八位行记录 Native64 接入 llama.cpp CUDA 的路径。计时在上下文预填充后开始。部署节省量可用目标设备和实际业务负载单独验收。
+Each row uses its corresponding runtime and quantization configuration. The first row measures the Native64 batched execution path. The second measures the Native64 integration with llama.cpp CUDA. Timing begins after context prefill. Deployment benefits can be evaluated separately on the target hardware and production workload.
 
-[回到展示首页](../README.md) · [查看报告样品](../examples/README.md)
+[Back to the project overview](../README.md) · [Report example](../examples/README.md)

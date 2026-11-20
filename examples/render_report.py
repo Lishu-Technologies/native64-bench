@@ -22,19 +22,21 @@ def main():
     candidate_rate = float(candidate["tokens_per_second"])
     baseline_rate = float(baseline["tokens_per_second"])
     if any(not isfinite(rate) or rate <= 0 for rate in (candidate_rate, baseline_rate)):
-        parser.error("两组吞吐必须是有限的正数")
+        parser.error("Both throughput values must be finite positive numbers.")
 
     gain = candidate_rate / baseline_rate - 1
-    print(f"# {data['model']} 推理对照\n")
-    print(f"{data['gpu']}，{data['parallel_requests']} 路并行，"
-          f"每路 {data['prefix_tokens_per_request']:,} token 前缀。"
-          f"指标为{data['measure']}。\n")
-    print("| 运行路径 | 合计 token/s |")
+    print(f"# {data['model']} Inference Comparison\n")
+    print(
+        f"{data['gpu']}, {data['parallel_requests']} concurrent requests, "
+        f"{data['prefix_tokens_per_request']:,} prefix tokens per request. "
+        f"The metric is {data['measure']}.\n"
+    )
+    print("| Inference path | Aggregate tokens/s |")
     print("|---|---:|")
     print(f"| {candidate['label']} | {candidate_rate:.2f} |")
     print(f"| {baseline['label']} | {baseline_rate:.2f} |")
-    print(f"\n相对对照吞吐变化为 **{gain:+.2%}**。")
-    print("\n报告根据输入的汇总结果生成。")
+    print(f"\nThroughput relative to the baseline changed by **{gain:+.2%}**.")
+    print("\nThis report uses the aggregate results supplied in the input file.")
 
 
 if __name__ == "__main__":
